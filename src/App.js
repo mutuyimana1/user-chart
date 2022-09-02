@@ -18,9 +18,10 @@ import DashboardLayout from './components/Layouts/Dashboard';
 import SocialAuth from './components/SocialOAuth';
 import HomePageLayout from './components/Layouts/Home';
 import '../public/styles/App.scss';
-import ChatPage from './components/Chat/ChatPage';
+
 
 const App = () => {
+
   return (
     <div className="App">
       <ToastContainer />

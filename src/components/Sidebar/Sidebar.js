@@ -16,12 +16,16 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../../redux/actions/logoutAction';
 import { useDispatch } from 'react-redux';
-
+import ChatDialoge from '../../components/Chat/openChatDialog';
 
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [openDrawer, setOpenDrawer] = React.useState(false);
+  const handleClose = () => {
+    setOpenDrawer(false);
+  };
   return (
     <div className="sidebar" data-testid="sidebar-test">
       <div className="top">
@@ -82,6 +86,7 @@ const Sidebar = () => {
               <span>Chatting</span>
             </li>
           </Link>
+          <ChatDialoge open={openDrawer} handleClose={handleClose} />
           
           <li>
             <SettingsApplicationsIcon className="icon" />

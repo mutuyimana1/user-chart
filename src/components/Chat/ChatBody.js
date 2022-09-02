@@ -1,13 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import {io} from 'socket.io-client';
 import "./chat.css";
 
 
 let newSock;
 const ChatBody = () => {
+  const { user } = useSelector((state) => {
+    return {
+      user: state.userProfile?.user.user,
+    };
+});
   const navigate = useNavigate();
-
   const handleLeaveChat = () => {
     // localStorage.removeItem('auth-token');
     navigate('/');
@@ -29,22 +34,25 @@ const ChatBody = () => {
 
   connectingSocket()
 
-const [message, setMessage] = useState('');
+const [messages, setMessages] = useState([]);
   const [count, setCount] = useState();
   const [storedMessage, setStoredMessage] = useState();
+  const [mySocket, setMySocket] = useState()
   
 
   const userToken = localStorage.getItem('userToken');
   const tok = JSON.parse(userToken);
   
-  useEffect(() => {
-    const socket = connectingSocket();
+  // useEffect(() => {
+  //   const socket = connectingSocket();
+  //   setMySocket(socket)
+  //   socket.on('message', (data)=>{
+  //       setMessages(data.Chats)
+  //       console.log('message', data.Chats)
+  //   })
 
-    socket.on('connection', (data)=>{
-        console.log('connection', data)
-    })
 
-  }, []);
+  // }, []);
   return (
     <>
       <header className="chat__mainHeader">
@@ -56,12 +64,66 @@ const [message, setMessage] = useState('');
 
       {/*This shows messages sent from you*/}
       <div className="message__container">
-        <div className="message__chats">
-          <p className="sender__name">Me</p>
-          <div className="message__sender">
-            <p>Hello there</p>
-          </div>
-        </div>
+
+      {messages?.map((message)=>{
+                (
+                  <div className="message__chats">
+                  <>
+                  <p className="sender__name">Me</p>
+                  <div className="message__sender">
+                        <p>{console.log('Tyyyyyyt', message.sender)}</p>
+                  </div>
+                  </>
+                  </div>
+                )
+                
+              })
+      }
+
+                <div className="message__chats">
+                  <>
+                  <p className="sender__name">Me</p>
+                  <div className="message__sender">
+                        <p>Hettoo</p>
+                  </div>
+                  </>
+                  </div>
+
+                  <div className="message__chats">
+                  <>
+                  <p className="sender__name">Me</p>
+                  <div className="message__sender">
+                        <p>Hello</p>
+                  </div>
+                  </>
+                  </div>  
+        
+            
+              {/* {messages? messages.map((message)=>{
+                (
+                  <div className="message__chats">
+                  <>
+                  <p className="sender__name">Me</p>
+                  <div className="message__sender">
+                        <p>{console.log('Tyyyyyyt', message.sender)}</p>
+                  </div>
+                  </>
+                  </div>
+                )
+                
+              }): '' } */}
+             
+           
+          {/* {messages? (
+            <>
+            <p className="sender__name">Me</p>
+            <div className="message__sender">
+             <p>Hello there</p>
+            </div>
+            </>
+          ): ''} */}
+          
+        
 
         {/*This shows messages received by you*/}
         <div className="message__chats">
